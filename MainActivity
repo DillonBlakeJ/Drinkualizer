@@ -1,0 +1,176 @@
+package pkg.app.bd.thedrinkualizer;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        setBackground();
+        final EditText liquor1 = (EditText)findViewById(R.id.editText);
+        final EditText liquor2 = (EditText)findViewById(R.id.editText2);
+        final EditText ounces = (EditText)findViewById(R.id.editText3);
+        Button b1 = (Button)findViewById(R.id.button);
+        b1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                final double x = Double.parseDouble(liquor1.getText().toString());
+                final double y = Double.parseDouble(liquor2.getText().toString());
+                final double z = Double.parseDouble(ounces.getText().toString());
+                calculateABV(x, y, z);
+            }
+        });
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
+
+
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id){
+            case R.id.action_settings:
+                Intent i = new Intent(this, Settings.class);
+                startActivity(i);
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setBackground();
+
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public void calculateABV(double liquor1, double liquor2, double ounces){
+        double x =0;
+        if(liquor1 >= liquor2){
+            x = (liquor1 / liquor2);
+            x = (x * ounces);
+            x = round(x,2);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("For every "+ounces+" ounces of liquor1, it takes "+x+" ounes of liquor2"+
+                            " to get the same amount of alcohol content.");
+                    builder.setPositiveButton("Ok", null);
+            AlertDialog alert = builder.create();
+            alert.show();
+            alert.getWindow().getAttributes();
+            TextView textView = (TextView) alert.findViewById(android.R.id.message);
+            textView.setTextSize(20);
+                              }
+        else if (liquor2 > liquor1){
+            x = (liquor2 / liquor1);
+            x = (x * ounces);
+            x = round(x,2);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("For every "+ ounces +" ounces of liquor2, it takes "+ x +" ounces of liquor1" +
+                    " to get the same amount of alcohol content");
+            builder.setPositiveButton("Ok", null);
+            AlertDialog alert = builder.create();
+            alert.show();
+            alert.getWindow().getAttributes();
+            TextView textView = (TextView) alert.findViewById(android.R.id.message);
+            textView.setTextSize(20);
+        }
+    }
+
+    public void setBackground(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = preferences.getString("Color", "");
+
+        if(color.equalsIgnoreCase(""))
+        {
+            color = "Blue";
+        }
+
+        if (color.equals("Black")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.BLACK);
+        }else if (color.equals("Blue")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.BLUE);
+
+        }else if (color.equals("Cyan")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.CYAN);
+
+        }else if (color.equals("DarkGray")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.DKGRAY);
+
+        }else if (color.equals("Gray")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.GRAY);
+
+        }else if (color.equals("Green")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.GREEN);
+
+        }else if (color.equals("LightGray")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.LTGRAY);
+
+        }else if (color.equals("Magenta")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.MAGENTA);
+
+        }else if (color.equals("Red")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.RED);
+
+        }else if (color.equals("Yellow")) {
+            View view = findViewById(R.id.mainLayout);
+            view.setBackgroundColor(Color.YELLOW);
+
+        }
+    }
+
+
+}
