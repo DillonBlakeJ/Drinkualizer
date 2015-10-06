@@ -1,0 +1,168 @@
+
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+public class Settings extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        Button b1 = (Button)findViewById(R.id.buttonBlack);
+        Button b2 = (Button)findViewById(R.id.button2);
+        Button b3 = (Button)findViewById(R.id.button3);
+        Button b4 = (Button)findViewById(R.id.button4);
+        Button b5 = (Button)findViewById(R.id.button5);
+        Button b6 = (Button)findViewById(R.id.button6);
+        Button b7 = (Button)findViewById(R.id.button7);
+        Button b8 = (Button)findViewById(R.id.button8);
+        Button b9 = (Button)findViewById(R.id.button9);
+        Button b10 = (Button)findViewById(R.id.button10);
+        Button b11 = (Button)findViewById(R.id.button11);
+        b11.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                confirm();}
+        });
+         View.OnClickListener listener = new View.OnClickListener(){
+            public void onClick(View view){
+                switch(view.getId())
+                {
+                    case R.id.buttonBlack:
+                        changeBackground("Black");
+                        break;
+                    case R.id.button2:
+                        changeBackground("Blue");
+                        break;
+                    case R.id.button3:
+                        changeBackground("Cyan");
+                        break;
+                    case R.id.button4:
+                        changeBackground("DarkGray");
+                        break;
+                    case R.id.button5:
+                        changeBackground("Gray");
+                        break;
+                    case R.id.button6:
+                        changeBackground("Green");
+                        break;
+                    case R.id.button7:
+                        changeBackground("LightGray");
+                        break;
+                    case R.id.button8:
+                        changeBackground("Magenta");
+                        break;
+                    case R.id.button9:
+                        changeBackground("Red");
+                        break;
+                    case R.id.button10:
+                        changeBackground("Yellow");
+                        break;
+
+                }
+
+            }
+        };
+        b1.setOnClickListener(listener);
+        b2.setOnClickListener(listener);
+        b3.setOnClickListener(listener);
+        b4.setOnClickListener(listener);
+        b5.setOnClickListener(listener);
+        b6.setOnClickListener(listener);
+        b7.setOnClickListener(listener);
+        b8.setOnClickListener(listener);
+        b9.setOnClickListener(listener);
+        b10.setOnClickListener(listener);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void changeBackground(String color){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+
+
+        if (color == "Black") {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.BLACK);
+            editor.putString("Color","Black");
+            editor.apply();
+        }else if (color == "Blue" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.BLUE);
+            editor.putString("Color","Blue");
+            editor.apply();
+        }else if (color == "Cyan" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.CYAN);
+            editor.putString("Color","Cyan");
+            editor.apply();
+        }else if (color == "DarkGray" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.DKGRAY);
+            editor.putString("Color","DarkGray");
+            editor.apply();
+        }else if (color == "Gray" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.GRAY);
+            editor.putString("Color","Gray");
+            editor.apply();
+        }else if (color == "Green" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.GREEN);
+            editor.putString("Color","Green");
+            editor.apply();
+        }else if (color == "LightGray" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.LTGRAY);
+            editor.putString("Color","LightGray");
+            editor.apply();
+        }else if (color == "Magenta" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.MAGENTA);
+            editor.putString("Color","Magenta");
+            editor.apply();
+        }else if (color == "Red" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.RED);
+            editor.putString("Color","Red");
+            editor.apply();
+        }else if (color == "Yellow" ) {
+            View view = findViewById(R.id.settingsLayout);
+            view.setBackgroundColor(Color.YELLOW);
+            editor.putString("Color","Yellow");
+            editor.apply();
+        }
+    }
+
+    public void confirm(){
+        this.finish();
+    }
+}
