@@ -1,4 +1,4 @@
-package pkg.app.bd.thedrinkualizer;
+
 
 import android.content.Intent;
 import android.content.SharedPreferences;
